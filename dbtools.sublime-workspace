@@ -1,0 +1,412 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ta",
+				"table_name"
+			],
+			[
+				"re",
+				"result_code"
+			],
+			[
+				"out",
+				"out_buffer"
+			],
+			[
+				"n",
+				"name"
+			],
+			[
+				"table",
+				"tableName"
+			],
+			[
+				"LOG",
+				"LOGE"
+			],
+			[
+				"db",
+				"db_path"
+			],
+			[
+				"t",
+				"TAG"
+			],
+			[
+				"d",
+				"dbFile"
+			],
+			[
+				"p",
+				"pkgName"
+			],
+			[
+				"e",
+				"env"
+			],
+			[
+				"c_",
+				"c_pkgName"
+			],
+			[
+				"js",
+				"jstring2cstring"
+			],
+			[
+				"r",
+				"result"
+			],
+			[
+				"c",
+				"cstring"
+			],
+			[
+				"jst",
+				"jstring"
+			],
+			[
+				"j",
+				"jstring"
+			],
+			[
+				"in",
+				"include"
+			],
+			[
+				"versio",
+				"version_code"
+			],
+			[
+				"ve",
+				"version_code"
+			],
+			[
+				"apk",
+				"apks"
+			],
+			[
+				"te",
+				"test_if2"
+			],
+			[
+				"s",
+				"score"
+			],
+			[
+				"pr",
+				"Println"
+			],
+			[
+				"v_fl",
+				"v_float64"
+			],
+			[
+				"v_f",
+				"v_float64"
+			],
+			[
+				"v_int",
+				"v_int64"
+			],
+			[
+				"v_in",
+				"v_int16"
+			],
+			[
+				"v_i",
+				"v_int"
+			],
+			[
+				"v_b",
+				"v_bool"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "jni/protobuf/google/protobuf/config.h",
+			"settings":
+			{
+				"buffer_size": 990,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "jni/Android_new.mk",
+			"settings":
+			{
+				"buffer_size": 2035,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 306.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"synatx",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"syntax:j",
+				"Set Syntax: JSON"
+			],
+			[
+				"SY",
+				"Set Syntax: XML"
+			],
+			[
+				"sy",
+				"Set Syntax: XML"
+			]
+		],
+		"width": 584.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/xiaocongchen/dev/workspace/SqliteDBTools/jni/DBTools.h",
+		"/home/xiaocongchen/dev/workspace/SqliteDBTools/jni/Android.mk",
+		"/home/xiaocongchen/dev/workspace/SqliteDBTools/jni/Android_new.mk",
+		"/home/xiaocongchen/dev/workspace/SqliteDBTools/jni/DBTools.cpp",
+		"/home/xiaocongchen/dev/workspace/SqliteDBTools/jni/Application.mk",
+		"/home/xiaocongchen/dev/workspace/SqliteDBTools/jni/sqlite3.c",
+		"/home/xiaocongchen/dev/workspace/SqliteDBTools/src/pkg/id2/dbtools/library/DBTools.java",
+		"/home/xiaocongchen/dev/workspace/SqliteDBTools/build.sh",
+		"/home/xiaocongchen/dev/logs/run.sh",
+		"/home/xiaocongchen/Downloads/log和截图/log.logcat",
+		"/home/xiaocongchen/Desktop/bug",
+		"/home/xiaocongchen/Downloads/log.txt",
+		"/home/xiaocongchen/Downloads/log和截图 (2)/log.txt",
+		"/home/xiaocongchen/Desktop/preinstall-app",
+		"/home/xiaocongchen/Desktop/log.txt",
+		"/home/xiaocongchen/.config/sublime-text-2/Packages/User/logcat.YAML-tmLanguage",
+		"/home/xiaocongchen/vm-shared/log.log",
+		"/home/xiaocongchen/vm-shared/log1.log",
+		"/home/xiaocongchen/dev/python/example.py",
+		"/home/xiaocongchen/Desktop/classtime/ClassTimeMonitor.java",
+		"/home/xiaocongchen/Desktop/classtime/Utils.java",
+		"/home/xiaocongchen/dev/tools/apktool1.5.2/out5/AndroidManifest.xml",
+		"/home/xiaocongchen/dev/tools/log.xml",
+		"/home/xiaocongchen/Desktop/app_list",
+		"/home/xiaocongchen/Desktop/core",
+		"/home/xiaocongchen/Downloads/xialatongzhilan.txt",
+		"/home/xiaocongchen/vm-shared/取消设备管理/quxiaoguanli.txt",
+		"/home/xiaocongchen/dev/project/pcp_child/agent/build/manifests/PCP/debug/AndroidManifest.xml",
+		"/home/xiaocongchen/dev/project/pcp_child_new/agent/build.gradle",
+		"/home/xiaocongchen/dev/project/build/build_pcp_child.sh",
+		"/home/xiaocongchen/dev/project/pcp_child_new/build.sh",
+		"/home/xiaocongchen/dev/project/pcp_child_new/build_pcp_child.sh",
+		"/home/xiaocongchen/Downloads/log (1).log",
+		"/home/xiaocongchen/dev/project/pcp_child/build.sh",
+		"/home/xiaocongchen/dev/project/pcp_child_new/version_name",
+		"/home/xiaocongchen/dev/project/pcp_child_new/build.gradle",
+		"/home/xiaocongchen/dev/project/pcp_child_new/version_code",
+		"/home/xiaocongchen/Desktop/http",
+		"/home/xiaocongchen/Desktop/http.md",
+		"/home/xiaocongchen/Desktop/http.notes",
+		"/home/xiaocongchen/dev/doc/亲子平台策略/联系人白名单/PayloadContactWhiteListPolicy.java",
+		"/home/xiaocongchen/dev/doc/亲子平台策略/联系人白名单/联系人白名单.plist",
+		"/home/xiaocongchen/dev/doc/亲子平台策略/联系人白名单/联系人白名单.json",
+		"/home/xiaocongchen/.config/sublime-text-2/Packages/CTags/CTags.sublime-settings",
+		"/home/xiaocongchen/dev/opensource/big-blabla-monkey/code/gradle/simple/build.gradle",
+		"/E/dev/big-blabla-monkey/code/c/FizzBuzzWhizz.c",
+		"/E/dev/big-blabla-monkey/code/c/FizzBuzzWhizz",
+		"/E/dev/big-blabla-monkey/config/eclipse_google_cpp_formatter.xml"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"TransactionTooLargeException",
+			"tal",
+			"error",
+			"exception",
+			"Implicit intents with startService are not safe",
+			"PcpService\nPcpService",
+			"WhiteAppListManager\nWhiteAppListManager\nWhiteAppListManager",
+			"PcpService",
+			"send app pkg change",
+			"PcpService\nwhiteapplist",
+			"PcpService\nPcpService",
+			"check activity ",
+			"PcpUploader2",
+			"WhiteAppListManager",
+			".activities.PeopleActivity",
+			"targetActivity",
+			"android.intent.action.DIAL",
+			"current stage: 10",
+			"fatal",
+			"Thread is",
+			"upload",
+			"y"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "jni/protobuf/google/protobuf/config.h",
+					"settings":
+					{
+						"buffer_size": 990,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								654,
+								654
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "jni/Android_new.mk",
+					"settings":
+					{
+						"buffer_size": 2035,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1912,
+								1912
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 153.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 259.0,
+	"status_bar_visible": true
+}

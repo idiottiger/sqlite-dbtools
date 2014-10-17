@@ -1,0 +1,7 @@
+bin/
+gen/
+.tags
+.tags_sorted_by_file
+obj/
+*.so
+*.class
