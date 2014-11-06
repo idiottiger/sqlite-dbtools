@@ -1,0 +1,5 @@
+package dbtools_proto;
+
+message TableNames{
+	repeated string name = 1;
+}

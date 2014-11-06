@@ -5,3 +5,5 @@ gen/
 obj/
 *.so
 *.class
+.idea/
+.gradle/

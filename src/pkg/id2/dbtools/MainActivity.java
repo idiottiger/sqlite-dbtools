@@ -1,16 +1,11 @@
 package pkg.id2.dbtools;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import pkg.id2.dbtools.library.DBTools;
-import pkg.id2.sqlitedbtools.R;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import pkg.id2.sqlitedbtools.R;
+
+import java.io.*;
 
 public class MainActivity extends Activity {
 
@@ -18,14 +13,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		new File(getFilesDir().getAbsolutePath() + "/databases").mkdirs();
-		copyAssetFile2Another(this, "test.sqlite", getFilesDir().getAbsolutePath() + "/databases/test");
-		String[] names = DBTools.getTableNames(getPackageName(), "test");
-		if (names != null) {
-			for (String name : names) {
-				System.out.println("t:" + name);
-			}
-		}
 
 	}
 

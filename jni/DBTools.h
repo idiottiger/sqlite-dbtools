@@ -8,18 +8,58 @@
 extern "C" {
 #endif
 
-#define RESULT_OK 1L
-#define RESULT_DB_NOT_FOUND 2L
-#define RESULT_DB_OPEN_ERROR 3L
-#define RESULT_SQL_RUN_ERROR 4L
-#define RESULT_TABLE_NOT_FOUND 5L
+#define RESULT_DB_NOT_FOUND -1024L
+#define RESULT_DB_OPEN_ERROR -1023L
+#define RESULT_SQL_RUN_ERROR -1022L
+#define RESULT_TABLE_NOT_FOUND -1021L
 
+/*
+ * Class:     pkg_id2_dbtools_library_DBTools
+ * Method:    nativeGetErrorCode
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetErrorCode
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     pkg_id2_dbtools_library_DBTools
+ * Method:    nativeInit
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeInit
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     pkg_id2_dbtools_library_DBTools
+ * Method:    nativeGetTableNames
+ * Signature: (Ljava/lang/String;)I
+ */
 JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetTableNames
-(JNIEnv *, jclass, jstring, jobject);
+  (JNIEnv *, jclass, jstring);
 
+/*
+ * Class:     pkg_id2_dbtools_library_DBTools
+ * Method:    nativeGetTableColumnNames
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)I
+ */
+JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetTableColumnNames
+  (JNIEnv *, jclass, jstring, jstring);
 
-JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetTableData
-(JNIEnv *, jclass, jstring, jstring, jobject);
+/*
+ * Class:     pkg_id2_dbtools_library_DBTools
+ * Method:    nativeGetTableRowDatas
+ * Signature: (Ljava/lang/String;Ljava/lang/String;II)I
+ */
+JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetTableRowDatas
+  (JNIEnv *, jclass, jstring, jstring, jint, jint);
+
+/*
+ * Class:     pkg_id2_dbtools_library_DBTools
+ * Method:    nativeGetTableQueryDatas
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)I
+ */
+JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetTableQueryDatas
+  (JNIEnv *, jclass, jstring, jstring);
 
 #ifdef __cplusplus
 }

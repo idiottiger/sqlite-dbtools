@@ -51,7 +51,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 	$(LOCAL_PATH)/protobuf/google \
 	$(LOCAL_PATH)/protobuf \
 	$(LOCAL_PATH)/protobuf/google/protobuf \
-	$(LOCAL_PATH)/sqlite
+	$(LOCAL_PATH)/sqlite \
+	$(LOCAL_PATH)/proto
 
 LOCAL_LDLIBS := -llog -pthread -lgcc
 
