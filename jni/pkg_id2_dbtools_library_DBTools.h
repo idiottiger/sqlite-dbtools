@@ -33,6 +33,14 @@ JNIEXPORT void JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeInit
 
 /*
  * Class:     pkg_id2_dbtools_library_DBTools
+ * Method:    nativeRelease
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeRelease
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     pkg_id2_dbtools_library_DBTools
  * Method:    nativeGetTableNames
  * Signature: (Ljava/lang/String;)I
  */

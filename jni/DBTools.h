@@ -12,6 +12,22 @@ extern "C" {
 #define RESULT_DB_OPEN_ERROR -1023L
 #define RESULT_SQL_RUN_ERROR -1022L
 #define RESULT_TABLE_NOT_FOUND -1021L
+#define RESULT_WRITE_ERROR -1020L
+
+/**
+ * jni jstring convert to char*, *MUST* free after use
+ * @param  env
+ * @param  str
+ * @return
+ */
+char *jstring2cstring(JNIEnv *env, jstring str);
+
+jstring cstring2jstring(JNIEnv *env, const char *pStr);
+
+void set_error_code();
+void reset_error_code();
+int get_error_code();
+int get_out_proto_fd(const char*);
 
 /*
  * Class:     pkg_id2_dbtools_library_DBTools
@@ -28,6 +44,14 @@ JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetErrorCode
  */
 JNIEXPORT void JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeInit
   (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     pkg_id2_dbtools_library_DBTools
+ * Method:    nativeRelease
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeRelease
+  (JNIEnv *, jclass);
 
 /*
  * Class:     pkg_id2_dbtools_library_DBTools

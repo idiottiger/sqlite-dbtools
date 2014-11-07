@@ -3,10 +3,13 @@
 #include <stdlib.h>
 #include <android/log.h>
 #include <vector>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "sqlite/sqlite3.h"
 #include "DBTools.h"
-#include "proto/tablnames.pb.h"
+#include "proto/tablenames.pb.h"
 
 #define  LOGD(TAG,...)  __android_log_print(ANDROID_LOG_DEBUG,TAG,__VA_ARGS__)
 #define  LOGI(TAG,...)  __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__)
@@ -15,12 +18,42 @@
 
 #define TAG "DB_TOOLS"
 #define SQL_GET_TABLES "SELECT name FROM sqlite_master WHERE type='table'"
+#define PATH_NAME_MAX 256
 
-char *jstring2cstring(JNIEnv *env, jstring str);
-jstring cstring2jstring(JNIEnv *env, const char *pStr);
+#define PROTO_OUT_TABLE_NAMES "TN"
+#define PROTO_OUT_TABLE_COLUMNS "TC"
+#define PROTO_OUT_TABLE_ROWDATAS "TRD"
+#define PROTO_OUT_TABLE_QUERYDATAS "TQD"
+
+int error_code;
+char out_folder_path[PATH_NAME_MAX];
 
 using namespace std;
 using namespace dbtools_proto;
+
+void set_error_code(int code)
+{
+    error_code = code;
+}
+
+void reset_error_code()
+{
+    set_error_code(0);
+}
+
+int get_error_code()
+{
+    int result = error_code;
+    reset_error_code();
+    return result;
+}
+
+int get_out_proto_fd(const char *name)
+{
+    char file_path[PATH_NAME_MAX];
+    sprintf(file_path, "%s/%s", out_folder_path, name);
+    return open(file_path, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
+}
 
 /*
  * Class:     pkg_id2_dbtools_library_DBTools
@@ -28,9 +61,10 @@ using namespace dbtools_proto;
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetErrorCode
-  (JNIEnv *env, jclass cls){
-
-  }
+(JNIEnv *env, jclass cls)
+{
+    return get_error_code();
+}
 
 /*
  * Class:     pkg_id2_dbtools_library_DBTools
@@ -38,9 +72,24 @@ JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetErrorCode
  * Signature: (Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeInit
-  (JNIEnv *env, jclass cls, jstring outFolderPath){
-    
-  }
+(JNIEnv *env, jclass cls, jstring outFolderPath)
+{
+    char *path = jstring2cstring(env, outFolderPath);
+
+    strcpy(out_folder_path, path);
+    free((void *)path);
+}
+
+/*
+ * Class:     pkg_id2_dbtools_library_DBTools
+ * Method:    nativeRelease
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeRelease
+(JNIEnv *env, jclass cls)
+{
+
+}
 
 /*
  * Class:     pkg_id2_dbtools_library_DBTools
@@ -50,6 +99,7 @@ JNIEXPORT void JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeInit
 JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetTableNames
 (JNIEnv *env, jclass cls, jstring databasePath)
 {
+    reset_error_code();
     int result_code = 0;
     char *c_db_path = jstring2cstring(env, databasePath);
     LOGI(TAG, "invoke nativeGetTableNames: db path[%s]", c_db_path);
@@ -90,8 +140,19 @@ JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetTableNames
 
     if (result_code == 0)
     {
-
+        int fd = get_out_proto_fd(PROTO_OUT_TABLE_NAMES);
+        if (fd == -1)
+        {
+            result_code = RESULT_WRITE_ERROR;
+        }
+        else
+        {
+            tableNamesProto.SerializeToFileDescriptor(fd);
+            close(fd);
+        }
     }
+
+    set_error_code(result_code);
 
     return result_code;
 }

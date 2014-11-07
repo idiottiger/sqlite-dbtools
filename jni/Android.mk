@@ -45,7 +45,8 @@ LOCAL_SRC_FILES := \
 	protobuf/google/protobuf/io/zero_copy_stream_impl_lite.cc \
 	protobuf/google/protobuf/stubs/stringprintf.cc \
 	DBTools.cpp \
-	sqlite/sqlite3.c
+	sqlite/sqlite3.c \
+	proto/tablenames.pb.cc
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 	$(LOCAL_PATH)/protobuf/google \
@@ -54,6 +55,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 	$(LOCAL_PATH)/sqlite \
 	$(LOCAL_PATH)/proto
 
-LOCAL_LDLIBS := -llog -pthread -lgcc
+LOCAL_LDLIBS := -llog -pthread
 
 include $(BUILD_SHARED_LIBRARY)	
