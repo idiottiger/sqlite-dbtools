@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import dbtools_proto.Tablecolumns;
 import pkg.id2.dbtools.library.DBTools;
 import pkg.id2.sqlitedbtools.R;
 
@@ -25,6 +26,11 @@ public class MainActivity extends Activity {
         final List<String> names = DBTools.getTableNames(this, "test");
         Log.i("OUT", names.toString());
 
+        Tablecolumns.TableColumnList columnList = DBTools.getTableColumns(this, "test", "Audio");
+        for (int i = 0; i < columnList.getColumnCount(); i++) {
+            Tablecolumns.TableColumn column = columnList.getColumn(i);
+            Log.i("OUT", "index:" + column.getIndex() + ", name:" + column.getName() + ", type:" + column.getType());
+        }
     }
 
     public static void copyAssetFile2Another(Context context, String assetFileName, String copyToPath) {

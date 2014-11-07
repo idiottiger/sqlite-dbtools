@@ -1,0 +1,19 @@
+package dbtools_proto;
+
+message TableColumn{
+	required int32 index = 1;
+	required string name = 2;
+
+	enum ColumnType {
+	    INTEGER = 0;
+	    TEXT = 1;
+	    BLOB = 2;
+	    REAL = 3;
+  	}
+
+  	required ColumnType type = 3;
+}
+
+message TableColumnList {
+  repeated TableColumn column = 1;
+}

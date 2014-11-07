@@ -46,7 +46,8 @@ LOCAL_SRC_FILES := \
 	protobuf/google/protobuf/stubs/stringprintf.cc \
 	DBTools.cpp \
 	sqlite/sqlite3.c \
-	proto/tablenames.pb.cc
+	proto/tablenames.pb.cc \
+	proto/tablecolumns.pb.cc
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 	$(LOCAL_PATH)/protobuf/google \

@@ -10,6 +10,7 @@
 #include "sqlite/sqlite3.h"
 #include "DBTools.h"
 #include "proto/tablenames.pb.h"
+#include "proto/tablecolumns.pb.h"
 
 #define  LOGD(TAG,...)  __android_log_print(ANDROID_LOG_DEBUG,TAG,__VA_ARGS__)
 #define  LOGI(TAG,...)  __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__)
@@ -18,7 +19,20 @@
 
 #define TAG "DB_TOOLS"
 #define SQL_GET_TABLES "SELECT name FROM sqlite_master WHERE type='table'"
+
+// %s is the table name, the result like follow:
+// 0|ID|INTEGER|1||1
+// 1|AUDIO_PATH|TEXT|1|0|0
+// 2|AUDIO_DURATION|INTEGER|0||0
+//
+#define FMT_SQL_GET_TABLE_COLUMNS "PRAGMA table_info(%s)"
 #define PATH_NAME_MAX 256
+#define SQL_MAX PATH_NAME_MAX
+
+#define TYPE_INTEGER "INTEGER"
+#define TYPE_TEXT "TEXT"
+#define TYPE_REAL "REAL"
+#define TYPE_BLOB "BLOB"
 
 #define PROTO_OUT_TABLE_NAMES "TN"
 #define PROTO_OUT_TABLE_COLUMNS "TC"
@@ -30,6 +44,8 @@ char out_folder_path[PATH_NAME_MAX];
 
 using namespace std;
 using namespace dbtools_proto;
+
+TableColumn::ColumnType get_column_type(const char *typestr);
 
 void set_error_code(int code)
 {
@@ -53,6 +69,26 @@ int get_out_proto_fd(const char *name)
     char file_path[PATH_NAME_MAX];
     sprintf(file_path, "%s/%s", out_folder_path, name);
     return open(file_path, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
+}
+
+TableColumn::ColumnType get_column_type(const char *typestr)
+{
+    if (strcmp(typestr, TYPE_INTEGER))
+    {
+        return TableColumn::INTEGER;
+    }
+    else if (strcmp(typestr, TYPE_REAL))
+    {
+        return TableColumn::REAL;
+    }
+    else if (strcmp(typestr, TYPE_BLOB))
+    {
+        return TableColumn::BLOB;
+    }
+    else
+    {
+        return TableColumn::TEXT;
+    }
 }
 
 /*
@@ -105,12 +141,12 @@ JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetTableNames
     LOGI(TAG, "invoke nativeGetTableNames: db path[%s]", c_db_path);
     sqlite3 *database;
     int ret;
-
     TableNames tableNamesProto;
 
     if ((ret = sqlite3_open(c_db_path, &database)) == SQLITE_OK)
     {
         sqlite3_stmt *statement;
+
         ret = sqlite3_prepare_v2(database, SQL_GET_TABLES, -1, &statement, NULL);
 
         //check
@@ -119,20 +155,20 @@ JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetTableNames
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
                 char *table_name = (char *)sqlite3_column_text(statement, 0);
-                tableNamesProto.add_name(table_name);
+                tableNamesProto.add_name(table_name);                    
             }
             sqlite3_finalize(statement);
             sqlite3_close(database);
         }
         else
         {
-            LOGE(TAG, "Error query db: [%s], sql:[%s], error code:[%d]", c_db_path, SQL_GET_TABLES, ret);
+            LOGE(TAG, "[GET TABLE NAMES] Error query db: [%s], sql:[%s], error code:[%d]", c_db_path, SQL_GET_TABLES, ret);
             result_code = RESULT_SQL_RUN_ERROR;
         }
     }
     else
     {
-        LOGE(TAG, "Error open db: [%s], error code:[%d]", c_db_path, ret);
+        LOGE(TAG, "[GET TABLE NAMES] Error open db: [%s], error code:[%d]", c_db_path, ret);
         result_code = RESULT_DB_OPEN_ERROR;
     }
 
@@ -165,7 +201,70 @@ JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetTableNames
 JNIEXPORT jint JNICALL Java_pkg_id2_dbtools_library_DBTools_nativeGetTableColumnNames
 (JNIEnv *env, jclass cls, jstring databasePath, jstring tableName)
 {
+    reset_error_code();
+    int result_code = 0;
+    char *c_db_path = jstring2cstring(env, databasePath);
+    char *c_table_name = jstring2cstring(env, tableName);
+    LOGI(TAG, "invoke nativeGetTableColumnNames: db path[%s]", c_db_path);
+    sqlite3 *database;
+    int ret;
+    TableColumnList tableColumnList;
+    if ((ret = sqlite3_open(c_db_path, &database)) == SQLITE_OK)
+    {
+        sqlite3_stmt *statement;
+        char sql[SQL_MAX];
+        sprintf(sql, FMT_SQL_GET_TABLE_COLUMNS, c_table_name);
+        ret = sqlite3_prepare_v2(database, sql, -1, &statement, NULL);
 
+        //check
+        if (ret == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                TableColumn *column = tableColumnList.add_column();
+                int index = sqlite3_column_int(statement, 0);
+                char *name = (char *)sqlite3_column_text(statement, 1);
+                char *type_str = (char *)sqlite3_column_text(statement, 2);
+
+                column->set_index(index);
+                column->set_name(name);
+                column->set_type(get_column_type(type_str));
+            }
+            sqlite3_finalize(statement);
+            sqlite3_close(database);
+        }
+        else
+        {
+            LOGE(TAG, "[GET TABLE COLUMN NAMES] Error query db: [%s], sql:[%s], error code:[%d]", c_db_path, sql, ret);
+            result_code = RESULT_SQL_RUN_ERROR;
+        }
+    }
+    else
+    {
+        LOGE(TAG, "[GET TABLE COLUMN NAMES] Error open db: [%s], error code:[%d]", c_db_path, ret);
+        result_code = RESULT_DB_OPEN_ERROR;
+    }
+
+    free((void *)c_db_path);
+    free((void *)c_table_name);
+
+    if (result_code == 0)
+    {
+        int fd = get_out_proto_fd(PROTO_OUT_TABLE_COLUMNS);
+        if (fd == -1)
+        {
+            result_code = RESULT_WRITE_ERROR;
+        }
+        else
+        {
+            tableColumnList.SerializeToFileDescriptor(fd);
+            close(fd);
+        }
+    }
+
+    set_error_code(result_code);
+
+    return result_code;
 }
 
 /*

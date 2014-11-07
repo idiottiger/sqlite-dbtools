@@ -2,6 +2,7 @@ package pkg.id2.dbtools.library;
 
 import android.content.Context;
 import android.util.Log;
+import dbtools_proto.Tablecolumns;
 import dbtools_proto.Tablenames;
 
 import java.io.FileInputStream;
@@ -51,17 +52,25 @@ public class DBTools {
         nativeInit(sOutFolderPath);
     }
 
+    private static String getDatabaseRealPath(Context context, String databaseName) {
+        return String.format(DEFAULT_DB_PATH_FMT, context.getPackageName(), databaseName);
+    }
+
+    private static String getProtoName(String name) {
+        return sOutFolderPath + "/" + name;
+    }
+
     public static List<String> getTableNames(Context context, String databaseName) {
-        final String databasePath = String.format(DEFAULT_DB_PATH_FMT, context.getPackageName(), databaseName);
+        final String databasePath = getDatabaseRealPath(context, databaseName);
         final int result = nativeGetTableNames(databasePath);
         final List<String> tableNameList = new ArrayList<String>();
         if (result < 0) {
             Log.e(TAG, "get table names from:" + databasePath + ", error:" + result);
         } else {
-            final String fdName = sOutFolderPath + "/" + PROTO_OUT_TABLE_NAMES;
+            final String protoName = getProtoName(PROTO_OUT_TABLE_NAMES);
 
             try {
-                Tablenames.TableNames tableNames = Tablenames.TableNames.parseFrom(new FileInputStream(fdName));
+                Tablenames.TableNames tableNames = Tablenames.TableNames.parseFrom(new FileInputStream(protoName));
                 final int size = tableNames.getNameCount();
                 for (int i = 0; i < size; i++) {
                     tableNameList.add(tableNames.getName(i));
@@ -71,6 +80,23 @@ public class DBTools {
             }
         }
         return tableNameList;
+    }
+
+    public static Tablecolumns.TableColumnList getTableColumns(Context context, String databaseName, String tableName) {
+        final String databasePath = getDatabaseRealPath(context, databaseName);
+        final int result = nativeGetTableColumnNames(databasePath, tableName);
+        if (result < 0) {
+            Log.e(TAG, "get table columns from:" + databasePath + ", error:" + result);
+        } else {
+            final String protoName = getProtoName(PROTO_OUT_TABLE_COLUMNS);
+
+            try {
+                return Tablecolumns.TableColumnList.parseFrom(new FileInputStream(protoName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
 }
